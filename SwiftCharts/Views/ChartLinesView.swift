@@ -41,25 +41,15 @@ open class ChartLinesView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate func createLineMask(frame: CGRect) -> CALayer {
-        let lineMaskLayer = CAShapeLayer()
-        var maskRect = frame
-        maskRect.origin.y = 0
-        maskRect.size.height = frame.size.height
-        let path = CGPath(rect: maskRect, transform: nil)
-        
-        lineMaskLayer.path = path
-        
-        return lineMaskLayer
-    }
-
     open func generateLayer(path: UIBezierPath) -> CAShapeLayer {
         let lineLayer = CAShapeLayer()
         lineLayer.lineJoin = lineJoin.CALayerString
         lineLayer.lineCap = lineCap.CALayerString
         lineLayer.fillColor = UIColor.clear.cgColor
         lineLayer.lineWidth = lineWidth
-        
+
+        path.apply(CGAffineTransform(translationX: 2, y: 2))
+
         lineLayer.path = path.cgPath
         lineLayer.strokeColor = lineColor.cgColor
         
@@ -90,7 +80,7 @@ open class ChartLinesView: UIView {
     
     fileprivate func show(path: UIBezierPath) {
         let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = layer.frame
+        gradientLayer.frame = layer.frame.insetBy(dx: -2, dy: -2, dw: -2, dh: -2)
         let green = UIColor(red: 52/255, green: 211/255, blue: 149/255, alpha: 1.0).cgColor
         let yellow = UIColor.yellow.cgColor
         let orange = UIColor(red: 1.0, green: 109/255, blue: 0, alpha: 1.0).cgColor
