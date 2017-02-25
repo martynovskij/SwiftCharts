@@ -89,6 +89,18 @@ open class ChartLinesView: UIView {
     }
     
     fileprivate func show(path: UIBezierPath) {
-        layer.addSublayer(generateLayer(path: path))
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = layer.frame
+        let green = UIColor(red: 52/255, green: 211/255, blue: 149/255, alpha: 1.0).cgColor
+        let yellow = UIColor.yellow.cgColor
+        let orange = UIColor(red: 1.0, green: 109/255, blue: 0, alpha: 1.0).cgColor
+        gradientLayer.colors = [orange, yellow, green]
+        gradientLayer.locations = [NSNumber(value: 0), NSNumber(value: 0.5), NSNumber(value: 1)]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
+
+        gradientLayer.mask = generateLayer(path: path)
+
+        layer.addSublayer(gradientLayer)
     }
  }
