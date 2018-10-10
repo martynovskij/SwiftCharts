@@ -14,13 +14,13 @@ public protocol ChartLinesViewPathGenerator {
 
 open class ChartLinesView: UIView {
 
-    open let lineColor: UIColor
-    open let lineWidth: CGFloat
-    open let lineJoin: LineJoin
-    open let lineCap: LineCap
-    open let animDuration: Float
-    open let animDelay: Float
-    open let dashPattern: [Double]?
+    public let lineColor: UIColor
+    public let lineWidth: CGFloat
+    public let lineJoin: LineJoin
+    public let lineCap: LineCap
+    public let animDuration: Float
+    public let animDelay: Float
+    public let dashPattern: [Double]?
     
     public init(path: UIBezierPath, frame: CGRect, lineColor: UIColor, lineWidth: CGFloat, lineJoin: LineJoin, lineCap: LineCap, animDuration: Float, animDelay: Float, dashPattern: [Double]?) {
         self.lineColor = lineColor
@@ -43,8 +43,8 @@ open class ChartLinesView: UIView {
     
     open func generateLayer(path: UIBezierPath) -> CAShapeLayer {
         let lineLayer = CAShapeLayer()
-        lineLayer.lineJoin = lineJoin.CALayerString
-        lineLayer.lineCap = lineCap.CALayerString
+        lineLayer.lineJoin = convertToCAShapeLayerLineJoin(lineJoin.CALayerString)
+        lineLayer.lineCap = convertToCAShapeLayerLineCap(lineCap.CALayerString)
         lineLayer.fillColor = UIColor.clear.cgColor
         lineLayer.lineWidth = lineWidth
 
@@ -61,12 +61,12 @@ open class ChartLinesView: UIView {
             lineLayer.strokeEnd = 0.0
             let pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
             pathAnimation.duration = CFTimeInterval(animDuration)
-            pathAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+            pathAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
             pathAnimation.fromValue = NSNumber(value: 0 as Float)
             pathAnimation.toValue = NSNumber(value: 1 as Float)
             pathAnimation.autoreverses = false
             pathAnimation.isRemovedOnCompletion = false
-            pathAnimation.fillMode = kCAFillModeForwards
+            pathAnimation.fillMode = CAMediaTimingFillMode.forwards
             
             pathAnimation.beginTime = CACurrentMediaTime() + CFTimeInterval(animDelay)
             lineLayer.add(pathAnimation, forKey: "strokeEndAnimation")
@@ -94,3 +94,13 @@ open class ChartLinesView: UIView {
         layer.addSublayer(gradientLayer)
     }
  }
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToCAShapeLayerLineJoin(_ input: String) -> CAShapeLayerLineJoin {
+	return CAShapeLayerLineJoin(rawValue: input)
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToCAShapeLayerLineCap(_ input: String) -> CAShapeLayerLineCap {
+	return CAShapeLayerLineCap(rawValue: input)
+}

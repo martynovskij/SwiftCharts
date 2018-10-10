@@ -9,11 +9,11 @@
 import UIKit
 
 @available(*, deprecated: 0.2.5, message: "use ChartAxisValueDouble instead")
-open class ChartAxisValueFloat: ChartAxisValue {
+public class ChartAxisValueFloat: ChartAxisValue {
     
-    open let formatter: NumberFormatter
+    public let formatter: NumberFormatter
 
-    open var float: CGFloat {
+    public var float: CGFloat {
         return CGFloat(scalar)
     }
 
@@ -26,7 +26,7 @@ open class ChartAxisValueFloat: ChartAxisValue {
         return ChartAxisValueFloat(CGFloat(scalar), formatter: formatter, labelSettings: labelSettings)
     }
     
-    static var defaultFormatter: NumberFormatter = {
+    public static var defaultFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 2
         return formatter

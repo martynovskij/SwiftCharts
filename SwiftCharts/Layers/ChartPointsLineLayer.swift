@@ -15,9 +15,9 @@ public enum LineJoin {
     
     var CALayerString: String {
         switch self {
-        case .miter: return kCALineJoinMiter
-        case .round: return kCALineCapRound
-        case .bevel: return kCALineJoinBevel
+        case .miter: return convertFromCAShapeLayerLineJoin(CAShapeLayerLineJoin.miter)
+        case .round: return convertFromCAShapeLayerLineCap(CAShapeLayerLineCap.round)
+        case .bevel: return convertFromCAShapeLayerLineJoin(CAShapeLayerLineJoin.bevel)
         }
     }
     
@@ -37,9 +37,9 @@ public enum LineCap {
     
     var CALayerString: String {
         switch self {
-        case .butt: return kCALineCapButt
-        case .round: return kCALineCapRound
-        case .square: return kCALineCapSquare
+        case .butt: return convertFromCAShapeLayerLineCap(CAShapeLayerLineCap.butt)
+        case .round: return convertFromCAShapeLayerLineCap(CAShapeLayerLineCap.round)
+        case .square: return convertFromCAShapeLayerLineCap(CAShapeLayerLineCap.square)
         }
     }
     
@@ -79,7 +79,7 @@ public struct ScreenLine<T: ChartPoint> {
 open class ChartPointsLineLayer<T: ChartPoint>: ChartPointsLayer<T> {
     open fileprivate(set) var lineModels: [ChartLineModel<T>]
     open fileprivate(set) var lineViews: [ChartLinesView] = []
-    open let pathGenerator: ChartLinesViewPathGenerator
+    public let pathGenerator: ChartLinesViewPathGenerator
     open fileprivate(set) var screenLines: [(screenLine: ScreenLine<T>, view: ChartLinesView)] = []
     
     fileprivate let useView: Bool
@@ -216,4 +216,14 @@ open class ChartPointsLineLayer<T: ChartPoint>: ChartPointsLayer<T> {
         
         isTransform = false
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromCAShapeLayerLineJoin(_ input: CAShapeLayerLineJoin) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromCAShapeLayerLineCap(_ input: CAShapeLayerLineCap) -> String {
+	return input.rawValue
 }

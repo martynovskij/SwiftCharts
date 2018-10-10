@@ -96,7 +96,7 @@ open class ChartPointsViewsLayer<T: ChartPoint, U: UIView>: ChartPointsLayer<T> 
     }
     
     fileprivate func generateChartPointViews(chartPointModels: [ChartPointLayerModel<T>], chart: Chart) -> [ViewWithChartPoint] {
-        let viewsWithChartPoints: [ViewWithChartPoint] = chartPointsModels.flatMap {model in
+        let viewsWithChartPoints: [ViewWithChartPoint] = chartPointsModels.compactMap {model in
             if let view = viewGenerator(model, self, chart, isTransform) {
                 return (view: view, chartPointModel: model)
             } else {
@@ -184,7 +184,7 @@ open class ChartPointsViewsLayer<T: ChartPoint, U: UIView>: ChartPointsLayer<T> 
     
     open func bringToFront() {
         for (view, _) in viewsWithChartPoints {
-            view.superview?.bringSubview(toFront: view)
+            view.superview?.bringSubviewToFront(view)
         }
     }
 }

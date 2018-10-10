@@ -12,9 +12,9 @@ import UIKit
 open class ChartAxisLabel {
 
     /// Displayed text. Can be truncated.
-    open let text: String
+    public let text: String
     
-    open let settings: ChartLabelSettings
+    public let settings: ChartLabelSettings
 
     open fileprivate(set) var originalText: String
     
@@ -26,7 +26,7 @@ open class ChartAxisLabel {
         if self.settings.rotation =~ 0 {
             return size
         } else {
-            return CGRect(x: 0, y: 0, width: size.width, height: size.height).boundingRectAfterRotating(radians: self.settings.rotation * CGFloat(M_PI) / 180.0).size
+            return CGRect(x: 0, y: 0, width: size.width, height: size.height).boundingRectAfterRotating(radians: self.settings.rotation * CGFloat(Double.pi) / 180.0).size
         }
     }()
     

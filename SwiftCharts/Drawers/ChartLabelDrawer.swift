@@ -64,7 +64,7 @@ open class ChartLabelDrawer: ChartContextDrawer {
     
     fileprivate var transform: CGAffineTransform?
     
-    open let label: ChartAxisLabel
+    public let label: ChartAxisLabel
     
     open var center: CGPoint {
         return CGPoint(x: screenLoc.x + size.width / 2, y: screenLoc.y + size.height / 2)
@@ -122,7 +122,7 @@ open class ChartLabelDrawer: ChartContextDrawer {
             let centerX = labelX + labelHalfWidth
             let centerY = labelY + labelHalfHeight
             
-            let rotation = settings.rotation * CGFloat(M_PI) / CGFloat(180)
+            let rotation = settings.rotation * CGFloat(Double.pi) / CGFloat(180)
 
             var transform = CGAffineTransform.identity
             
@@ -168,8 +168,19 @@ open class ChartLabelDrawer: ChartContextDrawer {
 
     
     fileprivate func drawLabel(x: CGFloat, y: CGFloat, text: String) {
-        let attributes = [NSFontAttributeName: label.settings.font, NSForegroundColorAttributeName: label.settings.fontColor]
-        let attrStr = NSAttributedString(string: text, attributes: attributes)
+        let attributes = [convertFromNSAttributedStringKey(NSAttributedString.Key.font): label.settings.font, convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): label.settings.fontColor]
+        let attrStr = NSAttributedString(string: text, attributes: convertToOptionalNSAttributedStringKeyDictionary(attributes))
         attrStr.draw(at: CGPoint(x: x, y: y))
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

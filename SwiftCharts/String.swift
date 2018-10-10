@@ -22,11 +22,11 @@ extension String {
         let start = characters.index(startIndex, offsetBy: r.lowerBound)
 //        let end = <#T##String.CharacterView corresponding to `start`##String.CharacterView#>.index(start, offsetBy: r.upperBound - r.lowerBound)
         let end = characters.index(start, offsetBy: r.upperBound - r.lowerBound)
-        return self[Range(start..<end)]
+        return String(self[(start..<end)])
     }
 
     func size(_ font: UIFont) -> CGSize {
-        return NSAttributedString(string: self, attributes: [NSFontAttributeName: font]).size()
+        return NSAttributedString(string: self, attributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.font): font])).size()
     }
     
     func width(_ font: UIFont) -> CGFloat {
@@ -79,4 +79,15 @@ extension String {
 //        
 //        return substringToIndex(startIndex.advancedBy(characterCount))
 //    }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
 }

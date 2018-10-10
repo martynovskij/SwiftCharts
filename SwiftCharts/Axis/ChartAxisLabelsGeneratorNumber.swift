@@ -11,9 +11,9 @@ import Foundation
 /// Generates a single formatted number for scalar
 open class ChartAxisLabelsGeneratorNumber: ChartAxisLabelsGeneratorBase {
     
-    open let labelSettings: ChartLabelSettings
+    public let labelSettings: ChartLabelSettings
     
-    open let formatter: NumberFormatter
+    public let formatter: NumberFormatter
     
     public init(labelSettings: ChartLabelSettings, formatter: NumberFormatter = ChartAxisLabelsGeneratorNumber.defaultFormatter) {
         self.labelSettings = labelSettings
@@ -25,7 +25,7 @@ open class ChartAxisLabelsGeneratorNumber: ChartAxisLabelsGeneratorBase {
         return [ChartAxisLabel(text: text, settings: labelSettings)]
     }
     
-    static var defaultFormatter: NumberFormatter = {
+    public static var defaultFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 2
         return formatter

@@ -10,9 +10,9 @@ import UIKit
 
 open class ChartAxisLabelsGeneratorDate: ChartAxisLabelsGeneratorBase {
     
-    open let labelSettings: ChartLabelSettings
+    public let labelSettings: ChartLabelSettings
     
-    open let formatter: DateFormatter
+    public let formatter: DateFormatter
     
     public init(labelSettings: ChartLabelSettings, formatter: DateFormatter = ChartAxisLabelsGeneratorDate.defaultFormatter) {
         self.labelSettings = labelSettings
@@ -24,7 +24,7 @@ open class ChartAxisLabelsGeneratorDate: ChartAxisLabelsGeneratorBase {
         return [ChartAxisLabel(text: text, settings: labelSettings)]
     }
     
-    static var defaultFormatter: DateFormatter = {
+    public static var defaultFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd.MM.yyyy"
         return formatter
